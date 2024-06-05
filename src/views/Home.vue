@@ -23,6 +23,9 @@ const curTitle = ref({})
 
 <template>
   <main>
+    <div style="text-align: center;">
+        <img src="/astrology.png" style="width: 30%; margin: 0 auto;">
+    </div>
     <div v-for="(c, k) in stars" class="frame">
         <div class="title">{{ k }}</div>
         <span v-for="s in c" class="star" @click="curTitle = s">{{ s.title }}</span>  
