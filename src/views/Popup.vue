@@ -25,19 +25,24 @@ const hidden = () => {
     curGong.value = ''
     emits('update:modelValue', '')
 }
+
+const formatText = (text) => {
+    return text.replace(/\/(.*?)\//g, (m, p1) => {
+        return '<span style="color: red;">'+p1+'</span>'
+    })
+}
 </script>
 
 <template>
     <div v-if="props.modelValue.title" class="frame">
-        <div @click="hidden">x</div>
+        <div @click="hidden" style="text-align: right; padding: 0.5em">x</div>
         <div>{{ props.modelValue.category.title }} -> {{ props.modelValue.title }}</div>
         <span v-for="g in gong" class="s" :class="{select: curGong === g}" @click="curGong = g">{{ g }}</span>
-        <div class="text">
-            {{ props.modelValue.all }}
-        </div>
-        <div class="text" v-if="props.modelValue[curGong]">
-            {{ props.modelValue[curGong] }}
-        </div>
+        <div class="text" v-html="formatText(props.modelValue.all)" />
+        <div class="text" 
+            v-if="props.modelValue[curGong]" 
+            v-html = formatText(props.modelValue[curGong])
+        />
     </div>
 </template>
 
@@ -54,13 +59,16 @@ const hidden = () => {
     padding: 0.3em;
     width: 25%;
     display: inline-block;
+    text-align: center;
 }
 .s.select {
     background: gray;
+    color: white;
 }
 .text {
     padding: 0.5em;
     font-size: large;
+    margin-top: 1.5em;
 }
 
 </style>
