@@ -22,6 +22,8 @@ import TanLang from "./stars/TanLang";
 import TianXiang from "./stars/TianXiang";
 import WuQu from "./stars/WuQu";
 import JuMen from "./stars/JuMen";
+import ChangQu from "./stars/ChangQu";
+import FuBi from "./stars/FuBi";
 
 export default [
     HuaKe,
@@ -50,4 +52,7 @@ export default [
     LingXing,
     DiKong,
     DiJie,
+
+    ChangQu,
+    FuBi,
 ];
