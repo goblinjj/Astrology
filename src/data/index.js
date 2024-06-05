@@ -6,6 +6,22 @@ import HuaKe from "./stars/HuaKe";
 import HuaQuan from "./stars/HuaQuan";
 import HuoXing from "./stars/HuoXing";
 import LingXing from "./stars/LingXing";
+import DiKong from "./stars/DiKong";
+import DiJie from "./stars/DiJie";
+import ZiWei from "./stars/ZiWei";
+import TianFu from "./stars/TianFu";
+import TaiYang from "./stars/TaiYang";
+import TaiYin from "./stars/TaiYin";
+import TianJi from "./stars/TianJi";
+import TianTong from "./stars/TianTong";
+import TianLiang from "./stars/TianLiang";
+import LianZhen from "./stars/LianZhen";
+import QiSha from "./stars/QiSha";
+import PoJun from "./stars/PoJun";
+import TanLang from "./stars/TanLang";
+import TianXiang from "./stars/TianXiang";
+import WuQu from "./stars/WuQu";
+import JuMen from "./stars/JuMen";
 
 export default [
     HuaKe,
@@ -16,5 +32,20 @@ export default [
     TuoLuo,
     HuoXing,
     LingXing,
-    
+    DiKong,
+    DiJie,
+    ZiWei,
+    TianFu,
+    TaiYang,
+    TaiYin,
+    TianJi,
+    TianTong,
+    TianLiang,
+    QiSha,
+    PoJun,
+    TanLang,
+    TianXiang,
+    LianZhen,
+    WuQu,
+    JuMen,
 ];
