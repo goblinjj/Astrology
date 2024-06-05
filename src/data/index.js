@@ -28,12 +28,7 @@ export default [
     HuaQuan,
     HuaLu,
     HuaJi,
-    QingYang,
-    TuoLuo,
-    HuoXing,
-    LingXing,
-    DiKong,
-    DiJie,
+    
     ZiWei,
     TianFu,
     TaiYang,
@@ -48,4 +43,11 @@ export default [
     LianZhen,
     WuQu,
     JuMen,
+
+    QingYang,
+    TuoLuo,
+    HuoXing,
+    LingXing,
+    DiKong,
+    DiJie,
 ];
