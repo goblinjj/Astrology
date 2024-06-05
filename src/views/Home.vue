@@ -38,7 +38,7 @@ const curTitle = ref({})
 .title {
     font-size: large;
     margin-bottom: 0.5em;
-    white-space: nowrap
+    white-space: nowrap;
 }
 .star {
     padding: 0.5em;

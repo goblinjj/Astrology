@@ -36,13 +36,16 @@ const formatText = (text) => {
 <template>
     <div v-if="props.modelValue.title" class="frame">
         <div @click="hidden" style="text-align: right; padding: 0.5em">x</div>
-        <div>{{ props.modelValue.category.title }} -> {{ props.modelValue.title }}</div>
-        <span v-for="g in gong" class="s" :class="{select: curGong === g}" @click="curGong = g">{{ g }}</span>
+        <div class="title">{{ props.modelValue.category.title }} -> {{ props.modelValue.title }}</div>
         <div class="text" v-html="formatText(props.modelValue.all)" />
-        <div class="text" 
+
+        <div class="all">
+            <div class="text" style="margin-bottom: 2em; color: cornflowerblue;"
             v-if="props.modelValue[curGong]" 
             v-html = formatText(props.modelValue[curGong])
-        />
+            />
+            <span v-for="g in gong" class="s" :class="{select: curGong === g}" @click="curGong = g">{{ g }}</span>
+        </div>
     </div>
 </template>
 
@@ -54,6 +57,9 @@ const formatText = (text) => {
     position: absolute;
     top: 0;
     left: 0
+}
+.title {
+    font-size: x-large;
 }
 .s {
     padding: 0.3em;
@@ -70,5 +76,9 @@ const formatText = (text) => {
     font-size: large;
     margin-top: 1.5em;
 }
+.all {
+    position: absolute;
+    bottom: 2em;
 
+}
 </style>
