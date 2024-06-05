@@ -24,6 +24,8 @@ import WuQu from "./stars/WuQu";
 import JuMen from "./stars/JuMen";
 import ChangQu from "./stars/ChangQu";
 import FuBi from "./stars/FuBi";
+import KuiYue from "./stars/KuiYue";
+import LuCun from "./stars/LuCun";
 
 export default [
     HuaKe,
@@ -53,6 +55,8 @@ export default [
     DiKong,
     DiJie,
 
-    ChangQu,
     FuBi,
+    KuiYue,
+    ChangQu,
+    LuCun,
 ];
