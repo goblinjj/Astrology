@@ -26,7 +26,9 @@ const curTitle = ref({})
     </div>
     <div v-for="(c, k) in stars" class="frame">
         <div class="title">{{ k }}</div>
-        <span v-for="s in c" class="star" @click="curTitle = s">{{ s.title }}</span>  
+        <div class="parent">
+            <span v-for="s in c" class="star" @click="curTitle = s">{{ s.title }}</span>  
+        </div>
     </div>
     <pop v-model="curTitle"></pop>
   </main>
@@ -36,13 +38,20 @@ const curTitle = ref({})
 .frame {
     padding: 0.5em;
 }
+.parent {
+    /* text-align: center; */
+  /* display: flex;
+  justify-content: center;
+  flex-wrap: wrap; */
+}
 .title {
     font-size: large;
     margin-bottom: 0.5em;
     white-space: nowrap;
 }
 .star {
-    padding: 0.5em;
+    padding: 0.15em 0.5em;
+    display: inline-block;
     white-space: nowrap
 }
 </style>
