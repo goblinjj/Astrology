@@ -3,12 +3,17 @@
     "name": "紫微斗数-星耀查询",
     "icons": [
       {
+        "src": "/astrology192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
         "src": "/astrology.png",
         "type": "image/png",
         "sizes": "512x512"
       }
     ],
-    "start_url": "/index.html",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000"
