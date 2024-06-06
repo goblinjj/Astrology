@@ -38,12 +38,6 @@ const curTitle = ref({})
 .frame {
     padding: 0.5em;
 }
-.parent {
-    /* text-align: center; */
-  /* display: flex;
-  justify-content: center;
-  flex-wrap: wrap; */
-}
 .title {
     font-size: large;
     margin-bottom: 0.5em;

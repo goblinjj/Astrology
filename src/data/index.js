@@ -106,10 +106,9 @@ export default [
     WuQuPoJun,
     TianTongJuMen,
     TianTongTianLiang,
+    LianZhenTianFu,
     LianZhenTianXiang,
     LianZhenQiSha,
     LianZhenPoJun,
     LianZhenTanLang,
-    LianZhenTianFu,
-    
 ];

@@ -62,9 +62,9 @@ onMounted(() => {
 <style scoped>
 .frame2 {
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(100vh);
     background: white;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
 }
