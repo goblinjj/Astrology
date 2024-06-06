@@ -97,13 +97,13 @@ export default [
     TaiYangTaiYin,
     JuMenTaiYang,
     TaiYangTianLiang,
-    TianTongTaiYin,
-
+    
     WuQuTianFu,
-    WuQuTanLang,
     WuQuTianXiang,
     WuQuQiSha,
     WuQuPoJun,
+    WuQuTanLang,
+    TianTongTaiYin,
     TianTongJuMen,
     TianTongTianLiang,
     LianZhenTianFu,
