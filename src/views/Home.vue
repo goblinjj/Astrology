@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import data from '@/data/index'
 import pop from './Popup.vue'
-console.log(data)
 
 let stars = {};
 
@@ -15,7 +14,6 @@ for (var v of data) {
 }
 
 // category = [...new Set(category)];
-console.log(stars)
 
 const curTitle = ref({})
 

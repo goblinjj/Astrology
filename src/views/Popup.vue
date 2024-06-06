@@ -1,5 +1,5 @@
 <script setup>
-import { watchEffect, ref } from 'vue'
+import { watchEffect, ref, onMounted } from 'vue'
 
 const props = defineProps(['modelValue'])
 const title = ref('')
@@ -31,10 +31,20 @@ const formatText = (text) => {
         return '<span style="color: red;">'+p1+'</span>'
     })
 }
+
+const handleEsc = (event) => {
+    if (event.key === 'Escape') {
+        hidden();
+    }
+}
+
+onMounted(() => {
+    window.addEventListener('keydown', handleEsc);
+})
 </script>
 
 <template>
-    <div v-if="props.modelValue.title" class="frame"  @keydown.esc="hidden">
+    <div v-if="props.modelValue.title" class="frame">
         <div @click="hidden" style="text-align: right; padding: 0.5em"><img src="/close.png" style="width: 30px;"></div>
         <div class="title">{{ props.modelValue.category.title }} -> {{ props.modelValue.title }}</div>
         <div class="text" v-html="formatText(props.modelValue.all)" />
@@ -51,8 +61,8 @@ const formatText = (text) => {
 
 <style scoped>
 .frame {
-    width: 100vw;
-    height: 100vh;
+    width: 95vw;
+    height: 95vh;
     background: white;
     position: absolute;
     top: 0;
