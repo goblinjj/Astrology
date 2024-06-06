@@ -45,6 +45,12 @@ import WuQuTianXiang from "./stars/WuQuTianXiang";
 import WuQuQiSha from "./stars/WuQuQiSha";
 import WuQuPoJun from "./stars/WuQuPoJun";
 import TianTongJuMen from "./stars/TianTongJuMen";
+import TianTongTianLiang from "./stars/TianTongTianLiang";
+import LianZhenTianXiang from "./stars/LianZhenTianXiang";
+import LianZhenQiSha from "./stars/LianZhenQiSha";
+import LianZhenPoJun from "./stars/LianZhenPoJun";
+import LianZhenTanLang from "./stars/LianZhenTanLang";
+import LianZhenTianFu from "./stars/LianZhenTianFu";
 
 export default [
     HuaKe,
@@ -99,4 +105,11 @@ export default [
     WuQuQiSha,
     WuQuPoJun,
     TianTongJuMen,
+    TianTongTianLiang,
+    LianZhenTianXiang,
+    LianZhenQiSha,
+    LianZhenPoJun,
+    LianZhenTanLang,
+    LianZhenTianFu,
+    
 ];

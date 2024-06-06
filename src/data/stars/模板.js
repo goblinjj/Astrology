@@ -1,7 +1,7 @@
 export default {
-    title: '化忌',
+    title: '',
     category: {
-        title: '四化星',
+        title: '双星',
     },
     all: '',
     '命宫': '', 
