@@ -44,7 +44,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-if="props.modelValue.title" class="frame">
+    <div v-if="props.modelValue.title" class="frame2">
         <div @click="hidden" style="text-align: right; padding: 0.5em"><img src="/close.png" style="width: 30px;"></div>
         <div class="title">{{ props.modelValue.category.title }} -> {{ props.modelValue.title }}</div>
         <div class="text" v-html="formatText(props.modelValue.all)" />
@@ -60,8 +60,8 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.frame {
-    width: 99%;
+.frame2 {
+    width: 100%;
     height: calc(100vh - 60px);
     background: white;
     position: absolute;
@@ -76,9 +76,10 @@ onMounted(() => {
 }
 .title {
     font-size: x-large;
+    padding: 0.3em;
 }
 .s {
-    padding: 0.3em;
+    padding: 0.5em;
     width: 25%;
     display: inline-block;
     text-align: center;
