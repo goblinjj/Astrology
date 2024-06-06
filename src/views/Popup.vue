@@ -85,6 +85,6 @@ const formatText = (text) => {
 .all {
     position: absolute;
     bottom: 2em;
-
+    width: 100%;
 }
 </style>
