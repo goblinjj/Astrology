@@ -44,7 +44,7 @@ const curTitle = ref({})
     white-space: nowrap;
 }
 .star {
-    padding: 0.15em 0.5em;
+    padding: 0.5em;
     display: inline-block;
     white-space: nowrap
 }
