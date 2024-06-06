@@ -2,6 +2,7 @@
     "short_name": "星耀查询",
     "name": "紫微斗数-星耀查询",
     "start_url": "/",
+    "display": "fullscreen",
     "icons": [
       {
         "src": "/astrology192.png",
