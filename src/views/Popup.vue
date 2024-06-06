@@ -34,7 +34,7 @@ const formatText = (text) => {
 </script>
 
 <template>
-    <div v-if="props.modelValue.title" class="frame">
+    <div v-if="props.modelValue.title" class="frame"  @keydown.esc="hidden">
         <div @click="hidden" style="text-align: right; padding: 0.5em"><img src="/close.png" style="width: 30px;"></div>
         <div class="title">{{ props.modelValue.category.title }} -> {{ props.modelValue.title }}</div>
         <div class="text" v-html="formatText(props.modelValue.all)" />
