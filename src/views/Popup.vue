@@ -56,7 +56,13 @@ const formatText = (text) => {
     background: white;
     position: absolute;
     top: 0;
-    left: 0
+    left: 0;
+}
+@media (min-width: 1024px) {
+  /* .frame  {
+    margin: 0 auto;
+    max-width: 760px;
+  } */
 }
 .title {
     font-size: x-large;

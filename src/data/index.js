@@ -27,6 +27,24 @@ import FuBi from "./stars/FuBi";
 import KuiYue from "./stars/KuiYue";
 import LuCun from "./stars/LuCun";
 import TianMa from "./stars/TianMa";
+import ZiWeiPoJun from "./stars/ZiWeiPoJun";
+import ZiWeiTianFu from "./stars/ZiWeiTianFu";
+import ZiWeiTanLang from "./stars/ZiWeiTanLang";
+import ZiWeiQiSha from "./stars/ZiWeiQiSha";
+import ZiWeiTianXiang from "./stars/ZiWeiTianXiang";
+import TianJiJuMen from "./stars/TianJiJuMen";
+import TianJiTaiYin from "./stars/TianJiTaiYin";
+import TianJiTianLiang from "./stars/TianJiTianLiang";
+import TaiYangTaiYin from "./stars/TaiYangTaiYin";
+import JuMenTaiYang from "./stars/JuMenTaiYang";
+import TaiYangTianLiang from "./stars/TaiYangTianLiang";
+import TianTongTaiYin from "./stars/TianTongTaiYin";
+import WuQuTianFu from "./stars/WuQuTianFu";
+import WuQuTanLang from "./stars/WuQuTanLang";
+import WuQuTianXiang from "./stars/WuQuTianXiang";
+import WuQuQiSha from "./stars/WuQuQiSha";
+import WuQuPoJun from "./stars/WuQuPoJun";
+import TianTongJuMen from "./stars/TianTongJuMen";
 
 export default [
     HuaKe,
@@ -61,4 +79,24 @@ export default [
     ChangQu,
     LuCun,
     TianMa,
+
+    ZiWeiTianFu,
+    ZiWeiTianXiang,
+    ZiWeiQiSha,
+    ZiWeiPoJun,
+    ZiWeiTanLang,
+    TianJiJuMen,
+    TianJiTaiYin,
+    TianJiTianLiang,
+    TaiYangTaiYin,
+    JuMenTaiYang,
+    TaiYangTianLiang,
+    TianTongTaiYin,
+
+    WuQuTianFu,
+    WuQuTanLang,
+    WuQuTianXiang,
+    WuQuQiSha,
+    WuQuPoJun,
+    TianTongJuMen,
 ];

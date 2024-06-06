@@ -22,7 +22,7 @@ const curTitle = ref({})
 </script>
 
 <template>
-  <main>
+  <main style="margin: 0 auto; max-width: 760px">
     <div style="text-align: center;">
         <img src="/astrology.png" style="width: 30%; margin: 0 auto;">
     </div>
