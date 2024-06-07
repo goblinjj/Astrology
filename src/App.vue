@@ -19,4 +19,13 @@ import { RouterLink, RouterView } from 'vue-router'
 .router-link-active {
   color:cornflowerblue;
 }
+a{
+  outline: none;
+  text-decoration: none;
+
+  &:hover,&:active {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+}
 </style>
