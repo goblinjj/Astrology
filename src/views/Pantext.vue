@@ -7,6 +7,12 @@ const props = defineProps(['gong'])
 const gong = props.gong
 const store = useLocalStorage(gong, []);
 
+const formatText = (text) => {
+    return text.replace(/\/(.*?)\//g, (m, p1) => {
+        return '<span style="color: red;">'+p1+'</span>'
+    })
+}
+
 const shengxiao = [
     ['子鼠', '深藏不露，内敛，机灵，观察力强，低调，暗地发力'],
     ['丑牛', '扭矩，有原则性，做事有规矩，刚毅，细致，吹毛求疵'],
@@ -26,12 +32,12 @@ const starText = (star) => {
     for (let k in formatStar) {
         for (let v of formatStar[k]) {
             if (v.title == star)
-                return v[gong]
+                return formatText(v[gong])
         }
     }
     for (let v of shengxiao) {
         if (v[0] == star)
-            return v[1]
+            return formatText(v[1])
     }
 }
 </script>
