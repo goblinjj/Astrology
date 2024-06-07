@@ -42,7 +42,7 @@ const shengxiao = ['子鼠', '丑牛', '寅虎', '卯兔', '辰龙', '巳蛇', '
     <div v-if="showPop">
         <div class="overlay" @click="hiddenPop()"></div>
         <div class="mainpop">
-            <div v-if="gong == '命宫'">
+            <div v-if="gong == '命宫'" class="frame">
                 <div class="title">紫薇生肖</div>
                 <div class="parent">
                     <span v-for="s in shengxiao" class="star" :class="{active: store.indexOf(s) >= 0}" @click="selectStar(s)">{{ s }}</span>
