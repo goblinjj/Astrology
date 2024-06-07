@@ -33,7 +33,7 @@ const shengxiao = ['子鼠', '丑牛', '寅虎', '卯兔', '辰龙', '巳蛇', '
 
 <template>
     <div @click="popup()">
-        <div v-if="isShow()" style="text-decoration: underline;text-underline-offset: 5px;">添加星耀</div>
+        <div v-if="isShow()" style="text-decoration: underline;text-underline-offset: 5px; color:dimgray">添加星耀</div>
         <div v-else>
             <span v-for="s in store" class="s">{{ s }}</span>
         </div>
