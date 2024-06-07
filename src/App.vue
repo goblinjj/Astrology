@@ -19,4 +19,27 @@ import { RouterLink, RouterView } from 'vue-router'
 .router-link-active {
   color:cornflowerblue;
 }
+/* 移除链接的颜色 */
+a:link {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* 移除访问过的链接的颜色 */
+a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* 移除鼠标悬停在链接上的颜色 */
+a:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* 移除选定链接的颜色 */
+a:active {
+    color: inherit;
+    text-decoration: none;
+}
 </style>
