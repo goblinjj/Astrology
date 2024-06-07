@@ -1,30 +1,14 @@
 <script setup>
 import { ref } from 'vue'
-import data from '@/data/index'
 import pop from './Popup.vue'
-
-let stars = {};
-
-for (var v of data) {
-    let cTitle = v.category.title
-    if (typeof stars[cTitle] === 'undefined') {
-        stars[cTitle] = [];
-    }
-    stars[cTitle].push(v)
-}
-
-// category = [...new Set(category)];
+import formatStar from '@/data/formatStar'
 
 const curTitle = ref({})
-
 </script>
 
 <template>
   <main style="margin: 0 auto; max-width: 760px">
-    <div style="text-align: center;">
-        <img src="/astrology.png" style="width: 30%; margin: 0 auto;">
-    </div>
-    <div v-for="(c, k) in stars" class="frame">
+    <div v-for="(c, k) in formatStar" class="frame">
         <div class="title">{{ k }}</div>
         <div class="parent">
             <span v-for="s in c" class="star" @click="curTitle = s">{{ s.title }}</span>  
