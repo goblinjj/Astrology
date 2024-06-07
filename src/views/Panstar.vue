@@ -107,6 +107,7 @@ const shengxiao = ['子鼠', '丑牛', '寅虎', '卯兔', '辰龙', '巳蛇', '
     display: inline-block;
     padding: 0.2em 0.4em;
     margin-right: 0.3em;
-    margin-bottom: 0.3em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
 }
 </style>
