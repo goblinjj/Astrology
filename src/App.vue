@@ -1,7 +1,8 @@
 <script setup>
-import { Analytics } from "@vercel/analytics/react"
+import { inject } from "@vercel/analytics"
 import { SpeedInsights } from "@vercel/speed-insights/vue"
 import { RouterLink, RouterView } from 'vue-router'
+inject()
 </script>
 
 <template>
@@ -9,8 +10,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <RouterLink class="routelink" to="/pan">组盘</RouterLink>
   <hr style="margin-bottom: 1em;">
   <RouterView />
-  <Analytics />
-  <SpeedInsights />
+  <SpeedInsights/>
 </template>
 
 <style scoped>
