@@ -28,11 +28,12 @@ const selectStar = (star) => {
         store.value.push(star);
     }
 }
+const shengxiao = ['子鼠', '丑牛', '寅虎', '卯兔', '辰龙', '巳蛇', '午马', '未羊', '申猴', '酉鸡', '戌狗', '亥猪'];
 </script>
 
 <template>
     <div @click="popup()">
-        <div v-if="isShow()">添加星耀</div>
+        <div v-if="isShow()" style="text-decoration: underline;text-underline-offset: 5px;">添加星耀</div>
         <div v-else>
             <span v-for="s in store" class="s">{{ s }}</span>
         </div>
@@ -41,6 +42,12 @@ const selectStar = (star) => {
     <div v-if="showPop">
         <div class="overlay" @click="hiddenPop()"></div>
         <div class="mainpop">
+            <div v-if="gong == '命宫'">
+                <div class="title">紫薇生肖</div>
+                <div class="parent">
+                    <span v-for="s in shengxiao" class="star" :class="{active: store.indexOf(s) >= 0}" @click="selectStar(s)">{{ s }}</span>
+                </div>
+            </div>
             <div v-for="(c, k) in formatStar" class="frame">
                 <div class="title">{{ k }}</div>
                 <div class="parent">
