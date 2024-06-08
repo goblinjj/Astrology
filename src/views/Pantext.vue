@@ -32,12 +32,12 @@ const starText = (star) => {
     for (let k in formatStar) {
         for (let v of formatStar[k]) {
             if (v.title == star)
-                return formatText(v[gong])
+                return {text: formatText(v[gong]), star: v}
         }
     }
     for (let v of shengxiao) {
         if (v[0] == star)
-            return formatText(v[1])
+            return {text: formatText(v[1]), star: {}}
     }
 }
 </script>
@@ -45,7 +45,7 @@ const starText = (star) => {
 <template>
     <div>
         <div v-for="star in store" style="margin-bottom: 0.5em;">
-            <span style="font-size: large;">{{ star }} : </span><span v-html="starText(star)"></span>
+            <span style="font-size: large;">{{ star }} : </span><span :title="starText(star).star.all" v-html="starText(star).text"></span>
         </div>
     </div>
 </template>
