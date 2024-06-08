@@ -45,7 +45,7 @@ const starText = (star) => {
 <template>
     <div>
         <div v-for="star in store" style="margin-bottom: 0.5em;">
-            <span style="font-size: large;">{{ star }} : </span><span :title="starText(star).star.all" v-html="starText(star).text"></span>
+            <span style="font-size: large;" :title="starText(star).star.all">{{ star }} : </span><span v-html="starText(star).text"></span>
         </div>
     </div>
 </template>
