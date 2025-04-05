@@ -92,6 +92,8 @@ onMounted(() => {
     padding: 0.5em;
     font-size: large;
     margin-top: 1.5em;
+    max-height: 35%;
+    overflow: auto;
 }
 .all {
     position: absolute;
