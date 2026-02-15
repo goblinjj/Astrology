@@ -1,17 +1,19 @@
-<script setup>
-import { inject } from "@vercel/analytics"
-import { SpeedInsights } from "@vercel/speed-insights/vue"
-import { RouterLink, RouterView } from 'vue-router'
+import { ref, provide } from 'vue'
+
+const isNavVisible = ref(true)
+provide('toggleNav', (val) => { isNavVisible.value = val })
+
 inject()
-</script>
 
 <template>
-  <nav class="nav">
-    <RouterLink class="routelink" to="/">排盘</RouterLink>
-    <RouterLink class="routelink" to="/stars">星耀</RouterLink>
-    <RouterLink class="routelink" to="/dianji">典籍</RouterLink>
-  </nav>
-  <div class="divider"></div>
+  <div v-show="isNavVisible">
+    <nav class="nav">
+      <RouterLink class="routelink" to="/">排盘</RouterLink>
+      <RouterLink class="routelink" to="/stars">星耀</RouterLink>
+      <RouterLink class="routelink" to="/dianji">典籍</RouterLink>
+    </nav>
+    <div class="divider"></div>
+  </div>
   <RouterView />
   <SpeedInsights/>
 </template>

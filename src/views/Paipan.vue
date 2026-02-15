@@ -1,7 +1,15 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { astro } from 'iztro'
+
+// App Navigation Control
+const toggleNav = inject('toggleNav')
+
+// Ensure Nav is visible when leaving
+onUnmounted(() => {
+  if (toggleNav) toggleNav(true)
+})
 
 import { TIME_OPTIONS, SCOPE_COLORS, gridStyle } from '../composables/usePaipanConstants'
 import { useHoroscope } from '../composables/useHoroscope'
@@ -18,7 +26,12 @@ const router = useRouter()
 const date = ref('')
 const timeIndex = ref(0)
 const gender = ref('男')
+const config = ref({
+  yearDivide: 'normal',
+  fixLeap: true,
+})
 const astrolabe = ref(null)
+const showSettings = ref(false)
 
 // ===== Horoscope Composable =====
 const {
@@ -39,7 +52,8 @@ function generate() {
     dateStr: date.value,
     timeIndex: timeIndex.value,
     gender: gender.value,
-    config: { yearDivide: 'exact', horoscopeDivide: 'exact' },
+    config: { yearDivide: config.value.yearDivide, horoscopeDivide: config.value.yearDivide },
+    fixLeap: config.value.fixLeap,
   })
   resetSelections()
   autoSelectLifePalace()
@@ -56,6 +70,22 @@ onMounted(() => {
     if (q.time !== undefined) timeIndex.value = parseInt(q.time) || 0
     if (q.gender) gender.value = q.gender
     generate()
+  }
+})
+
+watch([date, timeIndex, gender, config], () => {
+  if (astrolabe.value) generate()
+}, { deep: true })
+
+// Sync Nav visibility with Settings toggle
+watch(showSettings, (val) => {
+  if (toggleNav) toggleNav(val) 
+})
+
+// Hide Nav when chart is generated (initially)
+watch(astrolabe, (val) => {
+  if (val && toggleNav) {
+    toggleNav(showSettings.value)
   }
 })
 
@@ -134,30 +164,72 @@ function handleStarClick(name) {
           <input type="radio" v-model="gender" value="女" />♀ 女
         </label>
       </div>
+      <div class="form-row">
+        <span class="label-text">年分界</span>
+        <label class="gender-toggle" :class="{ active: config.yearDivide === 'normal' }">
+          <input type="radio" v-model="config.yearDivide" value="normal" />按除夕
+        </label>
+        <label class="gender-toggle" :class="{ active: config.yearDivide === 'exact' }">
+          <input type="radio" v-model="config.yearDivide" value="exact" />按立春
+        </label>
+      </div>
+      <div class="form-row">
+        <span class="label-text">闰月分界</span>
+        <label class="gender-toggle" :class="{ active: config.fixLeap === false }">
+          <input type="radio" v-model="config.fixLeap" :value="false" />算上月
+        </label>
+        <label class="gender-toggle" :class="{ active: config.fixLeap === true }">
+          <input type="radio" v-model="config.fixLeap" :value="true" />月中分界
+        </label>
+      </div>
       <div class="form-row" style="justify-content: center; margin-top: 3.2em;">
         <button class="btn-generate" @click="generate">排盘</button>
       </div>
     </div>
 
     <!-- Compact Form -->
-    <div v-if="astrolabe" class="form-compact">
+    <div v-if="astrolabe" class="compact-bar">
+       <button class="btn-toggle-settings" @click="showSettings = !showSettings">
+         {{ showSettings ? '收起设置 ▲' : '展开设置 ▼' }}
+       </button>
+       <!-- Settings Panel -->
+       <div v-show="showSettings" class="form-compact">
       <div class="fc-row">
         <input type="date" v-model="date" class="form-input-sm" />
         <select v-model="timeIndex" class="form-input-sm">
           <option v-for="t in TIME_OPTIONS" :key="t.value" :value="t.value">{{ t.label }}</option>
         </select>
       </div>
-      <div class="fc-row">
+      <div class="fc-row" style="flex-wrap: wrap; gap: 6px;">
         <label class="gender-toggle" :class="{ active: gender === '男' }">
-          <input type="radio" v-model="gender" value="男" />♂ 男
+          <input type="radio" v-model="gender" value="男" />♂
         </label>
         <label class="gender-toggle" :class="{ active: gender === '女' }">
-          <input type="radio" v-model="gender" value="女" />♀ 女
+          <input type="radio" v-model="gender" value="女" />♀
         </label>
-        <span class="fc-spacer"></span>
-        <button class="btn-sm" @click="generate">排盘</button>
+        
+        <span class="fc-divider">|</span>
+        
+        <span class="label-text-sm">年分界:</span>
+        <label class="gender-toggle" :class="{ active: config.yearDivide === 'normal' }">
+          <input type="radio" v-model="config.yearDivide" value="normal" />除夕
+        </label>
+        <label class="gender-toggle" :class="{ active: config.yearDivide === 'exact' }">
+          <input type="radio" v-model="config.yearDivide" value="exact" />立春
+        </label>
+        
+        <span class="fc-divider">|</span>
+        
+        <span class="label-text-sm">闰月:</span>
+        <label class="gender-toggle" :class="{ active: config.fixLeap === false }">
+          <input type="radio" v-model="config.fixLeap" :value="false" />上月
+        </label>
+        <label class="gender-toggle" :class="{ active: config.fixLeap === true }">
+          <input type="radio" v-model="config.fixLeap" :value="true" />中分
+        </label>
       </div>
     </div>
+  </div>
 
     <!-- Chart -->
     <div v-if="astrolabe" class="chart-section">
@@ -236,6 +308,20 @@ function handleStarClick(name) {
 .gender-toggle:hover { border-color: #8b2500; }
 .gender-toggle.active { background: #8b2500; color: #fff; border-color: #8b2500; }
 .btn-sm { background: #8b2500; color: #fff; border: none; padding: 0.3em 1em; border-radius: 10px; font-family: inherit; cursor: pointer; font-size: 0.85em; }
+.label-text-sm { font-size: 0.85em; color: #3c2415; white-space: nowrap; margin-right: 0; }
+.fc-divider { color: #d4c5a9; margin: 0 2px; }
+
+/* Toggle Bar */
+.compact-bar { margin-bottom: 0.5em; display: flex; flex-direction: column; align-items: stretch; }
+.btn-toggle-settings {
+  background: #faf6ef; border: 1px dashed #d4c5a9;
+  color: #8b2500; cursor: pointer;
+  padding: 0.3em; border-radius: 6px;
+  font-size: 0.85em; text-align: center;
+  transition: all 0.2s;
+}
+.btn-toggle-settings:hover { background: #fdfbf7; border-color: #8b2500; }
+
 
 /* === Chart Grid === */
 .chart-grid {
