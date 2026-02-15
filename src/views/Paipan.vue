@@ -5,7 +5,7 @@ import { astro } from 'iztro'
 
 const setNavVisible = inject('setNavVisible')
 
-onBeforeRouteLeave(() => { setNavVisible(true) })
+onBeforeRouteLeave(() => { setNavVisible(true); document.title = '紫微斗数' })
 onUnmounted(() => { setNavVisible(true) })
 
 import { TIME_OPTIONS, SCOPE_COLORS, gridStyle } from '../composables/usePaipanConstants'
@@ -55,6 +55,8 @@ function generate() {
   resetSelections()
   autoSelectLifePalace()
   router.replace({ query: { date: date.value, time: String(timeIndex.value), gender: gender.value === '男' ? '1' : '0' } })
+  const timeLabel = TIME_OPTIONS.find(t => t.value === timeIndex.value)?.label.split(' ')[0] || ''
+  document.title = `${date.value} ${timeLabel} ${gender.value} - 紫微斗数`
 }
 
 const history = ref([])
