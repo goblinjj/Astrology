@@ -422,7 +422,7 @@ function handleStarClick(name) {
   background: none; border: none; color: #999; cursor: pointer; font-size: 0.85em; font-family: inherit;
 }
 .btn-clear-history-sm:hover { color: #c41e3a; }
-.btn-clear-history-sm.btn-confirm-danger { color: #c41e3a; font-weight: bold; }
+.btn-clear-history-sm.btn-confirm-danger { background: #c41e3a; color: #fff; font-weight: bold; padding: 0.2em 0.6em; border-radius: 4px; }
 
 /* Compact nav inside settings */
 .compact-nav {
