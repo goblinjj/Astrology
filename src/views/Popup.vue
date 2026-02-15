@@ -84,6 +84,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    z-index: 2000;
 }
 
 .title {

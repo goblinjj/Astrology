@@ -15,6 +15,7 @@
                <div class="sc-info">
                   <span class="sname-v" :class="[palace.majorStars.includes(s) ? 'major-name' : (isLucky(s.name) ? 'lucky-star' : 'minor-name'), flyingSihuaBg[s.name] ? 'flying-highlight' : '']"
                         :style="flyingSihuaBg[s.name] ? { backgroundColor: flyingSihuaBg[s.name] } : {}"
+                        @click.stop="$emit('click-star', s.name)"
                   >{{ s.name }}</span>
                   <span class="sbright-v" :class="bClass(s.brightness)">{{ s.brightness }}</span>
                </div>
@@ -95,7 +96,7 @@ const props = defineProps({
   monthlyPalaceName: { type: String, default: '' },
 })
 
-defineEmits(['click'])
+defineEmits(['click', 'click-star'])
 
 const scopeColors = SCOPE_COLORS
 

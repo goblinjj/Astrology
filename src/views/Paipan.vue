@@ -8,6 +8,8 @@ import { useHoroscope } from '../composables/useHoroscope'
 import PalaceCell from '../components/PalaceCell.vue'
 import CenterInfo from '../components/CenterInfo.vue'
 import HoroscopePanel from '../components/HoroscopePanel.vue'
+import Popup from '../views/Popup.vue'
+import starData from '@/data/index'
 
 const route = useRoute()
 const router = useRouter()
@@ -81,6 +83,30 @@ function getPalaceScopes(p) {
       ? horoscopeData.value.monthly.palaceNames[p.index] : '',
   }
 }
+
+const currentStar = ref({})
+
+// Mapping for paired stars that are stored together in data
+const STAR_MAPPING = {
+  '左辅': '辅弼',
+  '右弼': '辅弼',
+  '文昌': '昌曲',
+  '文曲': '昌曲',
+  '天魁': '魁钺',
+  '天钺': '魁钺',
+}
+
+function handleStarClick(name) {
+  let searchName = name
+  if (STAR_MAPPING[name]) {
+    searchName = STAR_MAPPING[name]
+  }
+  
+  const found = starData.find(s => s.title === searchName)
+  if (found) {
+    currentStar.value = found
+  }
+}
 </script>
 
 <template>
@@ -149,6 +175,7 @@ function getPalaceScopes(p) {
           :yearlyPalaceName="getPalaceScopes(p).yearly"
           :monthlyPalaceName="getPalaceScopes(p).monthly"
           @click="clickPalace"
+          @click-star="handleStarClick"
         />
 
         <!-- Center Info -->
@@ -174,6 +201,9 @@ function getPalaceScopes(p) {
         @select-month="selectMonth"
       />
     </div>
+
+    <!-- Star Details Popup -->
+    <Popup v-model="currentStar" />
   </div>
 </template>
 
