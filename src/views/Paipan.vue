@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { astro } from 'iztro'
 
 import { TIME_OPTIONS, SCOPE_COLORS, gridStyle } from '../composables/usePaipanConstants'
@@ -7,6 +8,9 @@ import { useHoroscope } from '../composables/useHoroscope'
 import PalaceCell from '../components/PalaceCell.vue'
 import CenterInfo from '../components/CenterInfo.vue'
 import HoroscopePanel from '../components/HoroscopePanel.vue'
+
+const route = useRoute()
+const router = useRouter()
 
 // ===== Form State =====
 const date = ref('')
@@ -36,7 +40,21 @@ function generate() {
     config: { yearDivide: 'exact', horoscopeDivide: 'exact' },
   })
   resetSelections()
+  // Update URL for sharing
+  router.replace({ query: { date: date.value, time: String(timeIndex.value), gender: gender.value } })
 }
+
+// ===== Auto-generate from URL query params =====
+// Usage: /?date=2026-02-15&time=0&gender=男
+onMounted(() => {
+  const q = route.query
+  if (q.date) {
+    date.value = q.date
+    if (q.time !== undefined) timeIndex.value = parseInt(q.time) || 0
+    if (q.gender) gender.value = q.gender
+    generate()
+  }
+})
 
 function getPalaceScopes(p) {
   return {
