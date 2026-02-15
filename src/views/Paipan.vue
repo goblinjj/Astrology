@@ -54,8 +54,7 @@ function generate() {
   })
   resetSelections()
   autoSelectLifePalace()
-  // Update URL for sharing
-  router.replace({ query: { date: date.value, time: String(timeIndex.value), gender: gender.value } })
+  router.replace({ query: { date: date.value, time: String(timeIndex.value), gender: gender.value === '男' ? '1' : '0' } })
 }
 
 const history = ref([])
@@ -164,7 +163,10 @@ onMounted(() => {
 })
 
 watch([date, timeIndex, gender, config], () => {
-  if (astrolabe.value) generate()
+  if (astrolabe.value) {
+    generate()
+    router.replace({ query: { date: date.value, time: String(timeIndex.value), gender: gender.value === '男' ? '1' : '0' } })
+  }
 }, { deep: true })
 
 // Hide App nav when chart is shown
