@@ -260,6 +260,23 @@ function handleStarClick(name) {
       <div class="form-row" style="justify-content: center; margin-top: 3.2em;">
         <button class="btn-generate" @click="generate">排盘</button>
       </div>
+      <!-- History on home page -->
+      <div v-if="history.length > 0" class="home-history">
+        <div class="home-history-header">
+          <span class="label-text">历史记录</span>
+          <button class="btn-clear-history-sm" :class="{ 'btn-confirm-danger': clearConfirming }" @click.stop="clearHistory">
+            {{ clearConfirming ? '确定清空?' : '清空' }}
+          </button>
+        </div>
+        <div v-for="(item, idx) in history" :key="idx" class="history-item" @click="restoreHistory(item); generate()">
+          <div class="h-main">
+            <span class="h-date">{{ item.date }}</span>
+            <span class="h-time">{{ TIME_OPTIONS.find(t => t.value === item.timeIndex)?.label }}</span>
+            <span class="h-gender">{{ item.gender }}</span>
+          </div>
+          <button class="btn-delete-item" @click.stop="deleteHistoryItem(idx)" title="删除">×</button>
+        </div>
+      </div>
     </div>
 
     <!-- Compact Form -->
@@ -397,6 +414,15 @@ function handleStarClick(name) {
 .form-input { font-family: inherit; font-size: 1em; padding: 0.4em 0.6em; border: 1px solid #d4c5a9; border-radius: 6px; background: #faf6ef; color: #3c2415; flex: 1; max-width: 280px; }
 .radio-label { color: #3c2415; cursor: pointer; }
 .btn-generate { background: #8b2500; color: #fff; border: none; padding: 0.5em 2em; border-radius: 15px; font-size: 1.1em; font-family: inherit; cursor: pointer; }
+
+/* Home history */
+.home-history { margin-top: 1.5em; border-top: 1px solid #d4c5a9; padding-top: 0.8em; }
+.home-history-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5em; }
+.btn-clear-history-sm {
+  background: none; border: none; color: #999; cursor: pointer; font-size: 0.85em; font-family: inherit;
+}
+.btn-clear-history-sm:hover { color: #c41e3a; }
+.btn-clear-history-sm.btn-confirm-danger { color: #c41e3a; font-weight: bold; }
 
 /* Compact nav inside settings */
 .compact-nav {
