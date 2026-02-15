@@ -288,13 +288,17 @@ function isLucky(name) { return LUCKY_STARS.has(name) }
 
 .derived-label-abs {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  font-size: 10px;
+  top: 0;
+  right: 0;
+  font-size: 9px;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
   font-weight: bold;
   color: #cc6600;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 0 2px;
-  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 1px;
+  border-bottom-left-radius: 4px;
+  line-height: 1.1;
+  letter-spacing: 1px;
 }
 </style>
