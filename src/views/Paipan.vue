@@ -152,7 +152,15 @@ function formatHistoryTime(ts) {
 onMounted(() => {
   loadHistory()
   const q = route.query
-  // ...
+  if (q.date) {
+    date.value = q.date
+    if (q.time != null) timeIndex.value = Number(q.time)
+    if (q.gender != null) {
+      const g = q.gender
+      gender.value = (g === '女' || g === '0') ? '女' : '男'
+    }
+    generate()
+  }
 })
 
 watch([date, timeIndex, gender, config], () => {
