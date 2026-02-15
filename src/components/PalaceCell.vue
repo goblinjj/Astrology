@@ -13,7 +13,7 @@
           <div class="star-names-row">
              <div v-for="s in allStars" :key="s.name" class="star-col-v">
                <div class="sc-info">
-                  <span class="sname-v" :class="[palace.majorStars.includes(s) ? 'major-name' : 'minor-name', flyingSihuaBg[s.name] ? 'flying-highlight' : '']"
+                  <span class="sname-v" :class="[palace.majorStars.includes(s) ? 'major-name' : (isLucky(s.name) ? 'lucky-star' : 'minor-name'), flyingSihuaBg[s.name] ? 'flying-highlight' : '']"
                         :style="flyingSihuaBg[s.name] ? { backgroundColor: flyingSihuaBg[s.name] } : {}"
                   >{{ s.name }}</span>
                   <span class="sbright-v" :class="bClass(s.brightness)">{{ s.brightness }}</span>
@@ -37,7 +37,7 @@
        </div>
     </div>
 
-    <!-- Bottom: Flow Stars -->
+    <!-- Bottom: Flow Stars + Body Tag -->
     <div class="pc-footer">
        <div v-if="flowStars" class="flow-stars-h">
         <span v-for="(s, si) in flowStars" :key="si"
@@ -45,6 +45,7 @@
            {{ s.name }}
         </span>
        </div>
+       <span v-if="palace.isBodyPalace" class="body-tag-footer">身</span>
     </div>
 
     <!-- Derived name -->
@@ -69,7 +70,6 @@
           >{{ decadalPalaceName }}</span>
           <!-- Birth palace name -->
           <span class="pbb-vtext p-name">{{ palace.name }}</span>
-          <span v-if="palace.isBodyPalace" class="body-tag">身</span>
           <!-- Stem + Branch (rightmost) -->
           <span class="pbb-vtext p-branch">{{ palace.heavenlyStem }}{{ palace.earthlyBranch }}</span>
        </div>
@@ -102,6 +102,9 @@ const scopeColors = SCOPE_COLORS
 const cellStyle = computed(() => gridStyle(props.palace))
 
 const allStars = computed(() => [...props.palace.majorStars, ...props.palace.minorStars])
+
+const LUCKY_STARS = new Set(['左辅','右弼','文昌','文曲','天魁','天钺','禄存','天马'])
+function isLucky(name) { return LUCKY_STARS.has(name) }
 </script>
 
 <style scoped>
@@ -175,6 +178,7 @@ const allStars = computed(() => [...props.palace.majorStars, ...props.palace.min
 }
 .major-name { font-size: 14px; color: #8b2500; }
 .minor-name { font-size: 11px; color: #555; }
+.lucky-star { font-size: 12px; color: #4a90d9; }
 
 .sbright-v { font-size: 9px; margin-top: 2px; }
 
@@ -231,8 +235,15 @@ const allStars = computed(() => [...props.palace.majorStars, ...props.palace.min
   margin-top: auto;
   min-height: 16px;
   display: flex;
-  flex-direction: column;
-  gap: 1px;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 2px;
+}
+.flow-stars-h { flex: 1; }
+.body-tag-footer {
+  background: #c41e3a; color: #fff; font-size: 9px;
+  padding: 0 2px; border-radius: 2px;
+  flex-shrink: 0; margin-left: auto;
 }
 .flow-stars-h {
   display: flex;

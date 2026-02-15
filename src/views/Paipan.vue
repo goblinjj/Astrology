@@ -56,6 +56,21 @@ onMounted(() => {
   }
 })
 
+function adjustDate(field, delta) {
+  if (!date.value) return
+  if (field === 'hour') {
+    // Cycle timeIndex 0-12
+    timeIndex.value = ((timeIndex.value + delta) % 13 + 13) % 13
+  } else {
+    const d = new Date(date.value)
+    if (field === 'year') d.setFullYear(d.getFullYear() + delta)
+    else if (field === 'month') d.setMonth(d.getMonth() + delta)
+    else if (field === 'day') d.setDate(d.getDate() + delta)
+    date.value = d.toISOString().slice(0, 10)
+  }
+  generate()
+}
+
 function getPalaceScopes(p) {
   return {
     decadal: selDecadal.value && horoscopeData.value?.decadal?.palaceNames
@@ -143,6 +158,7 @@ function getPalaceScopes(p) {
           :fourPillars="fourPillars"
           :horoscopeData="horoscopeData"
           :selYear="selYear"
+          @adjust="adjustDate"
         />
       </div>
 
