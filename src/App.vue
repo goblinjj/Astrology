@@ -1,7 +1,10 @@
 import { ref, provide } from 'vue'
 
 const isNavVisible = ref(true)
-provide('toggleNav', (val) => { isNavVisible.value = val })
+provide('toggleNav', (val) => { 
+  console.log('App: toggleNav called with', val)
+  isNavVisible.value = val 
+})
 
 inject()
 

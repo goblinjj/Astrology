@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch, inject } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
 import { astro } from 'iztro'
 
 // App Navigation Control
@@ -8,6 +8,10 @@ const toggleNav = inject('toggleNav')
 
 // Ensure Nav is visible when leaving
 onUnmounted(() => {
+  if (toggleNav) toggleNav(true)
+})
+
+onBeforeRouteLeave(() => {
   if (toggleNav) toggleNav(true)
 })
 
@@ -153,14 +157,11 @@ function formatHistoryTime(ts) {
 // ===== Auto-generate from URL query params =====
 // Usage: /?date=2026-02-15&time=0&gender=男
 onMounted(() => {
+  console.log('Paipan: onMounted')
+  if (toggleNav) toggleNav(true)
   loadHistory()
   const q = route.query
-  if (q.date) {
-    date.value = q.date
-    if (q.time !== undefined) timeIndex.value = parseInt(q.time) || 0
-    if (q.gender) gender.value = q.gender
-    generate()
-  }
+  // ...
 })
 
 watch([date, timeIndex, gender, config], () => {
@@ -169,11 +170,13 @@ watch([date, timeIndex, gender, config], () => {
 
 // Sync Nav visibility with Settings toggle
 watch(showSettings, (val) => {
+  console.log('Paipan: watch(showSettings)', val)
   if (toggleNav) toggleNav(val) 
 })
 
 // Hide Nav when chart is generated (initially)
 watch(astrolabe, (val) => {
+  console.log('Paipan: watch(astrolabe)', !!val)
   if (val && toggleNav) {
     toggleNav(showSettings.value)
   }
