@@ -9,7 +9,7 @@ const store = useLocalStorage(gong, []);
 
 const formatText = (text) => {
     return text.replace(/\/(.*?)\//g, (m, p1) => {
-        return '<span style="color: red;">'+p1+'</span>'
+        return '<span style="color: #c41e3a;">'+p1+'</span>'
     })
 }
 
@@ -45,7 +45,7 @@ const starText = (star) => {
 <template>
     <div>
         <div v-for="star in store" style="margin-bottom: 0.5em;">
-            <span style="font-size: large;" :title="starText(star).star.all">{{ star }} : </span><span v-html="starText(star).text"></span>
+            <span style="font-size: large; color: #8b2500;" :title="starText(star).star.all">{{ star }} : </span><span v-html="starText(star).text"></span>
         </div>
     </div>
 </template>

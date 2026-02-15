@@ -33,7 +33,7 @@ const shengxiao = ['子鼠', '丑牛', '寅虎', '卯兔', '辰龙', '巳蛇', '
 
 <template>
     <div @click="popup()">
-        <div v-if="isShow()" style="text-decoration: underline;text-underline-offset: 5px; color:dimgray">添加星耀</div>
+        <div v-if="isShow()" style="text-decoration: underline;text-underline-offset: 5px; color: #8b2500">添加星耀</div>
         <div v-else>
             <span v-for="s in store" class="s">{{ s }}</span>
         </div>
@@ -60,31 +60,33 @@ const shengxiao = ['子鼠', '丑牛', '寅虎', '卯兔', '辰龙', '巳蛇', '
 
 <style scoped>
 .mainpop {
-    position: fixed;  
-    top: 50%;  
-    left: 50%;  
-    transform: translate(-50%, -50%);  
-    width: 80%;  
-    height: 50%;  
-    background: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 50%;
+    background: #faf6ef;
+    border: 1px solid #d4c5a9;
     overflow: auto;
-    z-index: 11111; 
+    z-index: 11111;
     border-radius: 10px;
     padding: 1em;
 }
 .overlay {
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    background: rgba(0, 0, 0, 0.5); 
-    z-index: 999; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
 }
 .active {
-    background: cornflowerblue;
+    background: #8b2500;
     color: white;
     border-radius: 10px;
+    border-color: #8b2500;
 }
 .frame {
     padding: 0.5em;
@@ -93,16 +95,21 @@ const shengxiao = ['子鼠', '丑牛', '寅虎', '卯兔', '辰龙', '巳蛇', '
     font-size: large;
     margin-bottom: 0.5em;
     white-space: nowrap;
+    color: #b8860b;
 }
 .star {
     padding: 0.5em;
     display: inline-block;
     white-space: nowrap;
     margin-right: 0.3em;
+    border: 1px solid #d4c5a9;
+    border-radius: 4px;
+    margin-bottom: 0.3em;
+    cursor: pointer;
 }
 .s {
     border-radius: 0.5em;
-    background: cornflowerblue;
+    background: #8b2500;
     color: white;
     display: inline-block;
     padding: 0.2em 0.4em;

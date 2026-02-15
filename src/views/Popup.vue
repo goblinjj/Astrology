@@ -29,7 +29,7 @@ const hidden = () => {
 
 const formatText = (text) => {
     return text.replace(/\/(.*?)\//g, (m, p1) => {
-        return '<span style="color: red;">' + p1 + '</span>'
+        return '<span style="color: #c41e3a;">' + p1 + '</span>'
     })
 }
 
@@ -77,7 +77,7 @@ onMounted(() => {
 .frame2 {
     width: 100%;
     height: 100vh;
-    background: white;
+    background: #faf6ef;
     position: fixed;
     top: 0;
     left: 0;
@@ -86,23 +86,17 @@ onMounted(() => {
     overflow: hidden;
 }
 
-@media (min-width: 1024px) {
-    /* .frame  {
-    margin: 0 auto;
-    max-width: 760px;
-  } */
-}
-
 .title {
     font-size: x-large;
     padding: 0.3em;
+    color: #8b2500;
 }
 
 .tabs {
     display: flex;
     padding: 0 0.5em;
     gap: 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #d4c5a9;
 }
 
 .tab {
@@ -115,8 +109,8 @@ onMounted(() => {
 }
 
 .tab.active {
-    color: cornflowerblue;
-    border-bottom-color: cornflowerblue;
+    color: #8b2500;
+    border-bottom-color: #8b2500;
 }
 
 .content-area {
@@ -131,11 +125,15 @@ onMounted(() => {
     width: 25%;
     display: inline-block;
     text-align: center;
+    border: 1px solid #d4c5a9;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .s.select {
-    background: gray;
+    background: #8b2500;
     color: white;
+    border-color: #8b2500;
 }
 
 .text {
@@ -145,7 +143,7 @@ onMounted(() => {
 }
 
 .gong-text {
-    color: cornflowerblue;
+    color: #8b2500;
     margin-bottom: 1em;
 }
 
@@ -163,7 +161,7 @@ onMounted(() => {
     padding: 1em;
     font-size: medium;
     line-height: 2;
-    color: #5c4033;
+    color: #3c2415;
     white-space: pre-wrap;
 }
 </style>

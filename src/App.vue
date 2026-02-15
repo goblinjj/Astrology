@@ -6,32 +6,46 @@ inject()
 </script>
 
 <template>
-  <RouterLink class="routelink" to="/">星耀</RouterLink>
-  <RouterLink class="routelink" to="/pan">组盘</RouterLink>
-  <RouterLink class="routelink" to="/dianji">典籍</RouterLink>
-  <hr style="margin-bottom: 1em;">
+  <nav class="nav">
+    <RouterLink class="routelink" to="/">星耀</RouterLink>
+    <RouterLink class="routelink" to="/pan">组盘</RouterLink>
+    <RouterLink class="routelink" to="/dianji">典籍</RouterLink>
+  </nav>
+  <div class="divider"></div>
   <RouterView />
   <SpeedInsights/>
 </template>
 
 <style scoped>
+.nav {
+  text-align: center;
+  padding-bottom: 0.5em;
+}
 .routelink {
-  color: black;
-  font-size:x-large;
-  padding: 0.3em;
+  color: #3c2415;
+  font-size: x-large;
+  padding: 0.3em 0.8em;
   display: inline-block;
+  letter-spacing: 0.1em;
 }
 .router-link-active {
-  color:cornflowerblue;
+  color: #8b2500;
+  border-bottom: 2px solid #8b2500;
 }
-a{
+.divider {
+  border: none;
+  border-top: 1.5px solid #d4c5a9;
+  border-bottom: 1px solid #d4c5a9;
+  height: 4px;
+  margin-bottom: 1.2em;
+}
+a {
   outline: none;
   text-decoration: none;
 
-  &:hover,&:active {
+  &:hover, &:active {
     -webkit-tap-highlight-color: transparent;
   }
-
 }
 a,
 a:hover,

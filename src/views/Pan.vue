@@ -32,7 +32,7 @@ const reset = () => {
     <table class="table">
         <tr v-for="i in 24" :key="i">
             <template v-if="i % 2 !== 0">
-                <td class="td" width="80px" style="text-align: center">{{ gong[(i - 1) / 2] }}</td>
+                <td class="td td-gong" width="80px">{{ gong[(i - 1) / 2] }}</td>
                 <td class="td">
                     <Panstar :gong="gong[(i - 1) / 2]"/>
                 </td>
@@ -56,17 +56,17 @@ const reset = () => {
   text-decoration: none;
   outline: none;
   color: #fff;
-  background-color: cornflowerblue;
+  background-color: #8b2500;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 3px #999;
+  box-shadow: 0 3px rgba(139, 37, 0, 0.4);
 }
 
-.button:hover {background-color: #6495ed}
+.button:hover { background-color: #a02d00 }
 
 .button:active {
-  background-color: #6495ed;
-  box-shadow: 0 1px #666;
+  background-color: #a02d00;
+  box-shadow: 0 1px rgba(139, 37, 0, 0.4);
   transform: translateY(4px);
 }
 
@@ -77,12 +77,17 @@ const reset = () => {
 
 .th,
 .td {
-    border: 1px solid #dddddd;
+    border: 1px solid #d4c5a9;
     text-align: left;
     padding: 8px;
 }
 
+.td-gong {
+    text-align: center;
+    background: #f5f0e8;
+}
+
 .th {
-    background-color: #f2f2f2;
+    background-color: #f5f0e8;
 }
 </style>

@@ -49,7 +49,7 @@ const toggle = (index) => {
     padding: 0.8em;
     font-size: large;
     font-weight: bold;
-    color: #5c4033;
+    color: #8b2500;
     background: #f5f0e8;
     cursor: pointer;
     user-select: none;
@@ -76,7 +76,7 @@ const toggle = (index) => {
     padding: 1em;
     font-size: medium;
     line-height: 1.8;
-    color: #3c2f1e;
+    color: #3c2415;
     white-space: pre-wrap;
     background: #fffcf5;
 }
@@ -91,7 +91,7 @@ const toggle = (index) => {
 
 .subsection-title {
     font-weight: bold;
-    color: #8b6914;
+    color: #b8860b;
     margin-bottom: 0.5em;
     font-size: medium;
 }
