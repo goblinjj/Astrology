@@ -1,20 +1,40 @@
 <template>
   <div class="center-info">
-    <div class="ci-title">紫微斗数命盘</div>
-    <div class="ci-row">{{ genderLabel }}　{{ astrolabe.fiveElementsClass }}</div>
-    <div class="ci-row">阳历：{{ astrolabe.solarDate }}</div>
-    <div class="ci-row">阴历：{{ astrolabe.lunarDate }}</div>
+    <div class="ci-group">
+      <div class="ci-row ci-main-info">{{ genderLabel }}　{{ astrolabe.fiveElementsClass }}</div>
+      <div class="ci-row">{{ astrolabe.lunarDate }}</div>
+    </div>
+    <div class="ci-group">
+      <div class="ci-row">命主：{{ astrolabe.soul }}　身主：{{ astrolabe.body }}</div>
+      <div class="ci-row">{{ astrolabe.zodiac }}　{{ astrolabe.sign }}</div>
+    </div>
+    
     <div class="ci-row pillars-row" v-if="fourPillars">
-      <span class="pillar-label">四柱：</span>
       <div class="pillars-cols">
-        <span class="pillar-col" :style="{ color: pillarColor(fourPillars.year) }">{{ fourPillars.year }}</span>
-        <span class="pillar-col" :style="{ color: pillarColor(fourPillars.month) }">{{ fourPillars.month }}</span>
-        <span class="pillar-col" :style="{ color: pillarColor(fourPillars.day) }">{{ fourPillars.day }}</span>
-        <span class="pillar-col" :style="{ color: pillarColor(fourPillars.hour) }">{{ fourPillars.hour }}</span>
+        <div class="pillar-col">
+          <span v-for="char in fourPillars.year" :key="'y'+char" :style="{ color: pillarColor(char) }">{{ char }}</span>
+        </div>
+        <div class="pillar-col">
+          <span v-for="char in fourPillars.month" :key="'m'+char" :style="{ color: pillarColor(char) }">{{ char }}</span>
+        </div>
+        <div class="pillar-col">
+          <span v-for="char in fourPillars.day" :key="'d'+char" :style="{ color: pillarColor(char) }">{{ char }}</span>
+        </div>
+        <div class="pillar-col">
+          <span v-for="char in fourPillars.hour" :key="'h'+char" :style="{ color: pillarColor(char) }">{{ char }}</span>
+        </div>
       </div>
     </div>
-    <div class="ci-row">命主：{{ astrolabe.soul }}　身主：{{ astrolabe.body }}</div>
-    <div class="ci-row">{{ astrolabe.zodiac }}　{{ astrolabe.sign }}</div>
+
+    <!-- Da Yun Display -->
+    <EightCharDaYun 
+      v-if="astrolabe && astrolabe.solarDate"
+      :solarDate="astrolabe.solarDate"
+      :timeIndex="timeIndex"
+      :gender="gender"
+    />
+
+
     <!-- Date/Time Adjustor -->
     <div class="ci-adjust">
       <div class="adj-group" v-for="field in adjustFields" :key="field.key">
@@ -34,10 +54,12 @@
 
 <script setup>
 import { computed } from 'vue'
+import EightCharDaYun from './EightCharDaYun.vue'
 
 const props = defineProps({
   astrolabe: { type: Object, required: true },
   gender: { type: String, required: true },
+  timeIndex: { type: Number, default: 0 }, // Passed from parent
   fourPillars: { type: Object, default: null },
   horoscopeData: { type: Object, default: null },
   selYear: { default: null },
@@ -65,14 +87,21 @@ const age = computed(() => props.horoscopeData?.age?.nominalAge || null)
 
 // 五行 colors by heavenly stem
 const WUXING_COLORS = {
-  '甲': '#2e7d32', '乙': '#2e7d32', // 木 Wood - green
-  '丙': '#c62828', '丁': '#c62828', // 火 Fire - red
-  '戊': '#8d6e27', '己': '#8d6e27', // 土 Earth - brown
-  '庚': '#b8860b', '辛': '#b8860b', // 金 Metal - gold
-  '壬': '#1565c0', '癸': '#1565c0', // 水 Water - blue
+  // Heavenly Stems
+  '甲': '#2e7d32', '乙': '#2e7d32', // Wood
+  '丙': '#c62828', '丁': '#c62828', // Fire
+  '戊': '#8d6e27', '己': '#8d6e27', // Earth
+  '庚': '#b8860b', '辛': '#b8860b', // Metal
+  '壬': '#1565c0', '癸': '#1565c0', // Water
+  // Earthly Branches
+  '寅': '#2e7d32', '卯': '#2e7d32', // Wood
+  '巳': '#c62828', '午': '#c62828', // Fire
+  '辰': '#8d6e27', '戌': '#8d6e27', '丑': '#8d6e27', '未': '#8d6e27', // Earth
+  '申': '#b8860b', '酉': '#b8860b', // Metal
+  '子': '#1565c0', '亥': '#1565c0', // Water
 }
-function pillarColor(pillar) {
-  return pillar ? (WUXING_COLORS[pillar[0]] || '#3c2415') : '#3c2415'
+function pillarColor(char) {
+  return WUXING_COLORS[char] || '#3c2415'
 }
 </script>
 
@@ -88,13 +117,29 @@ function pillarColor(pillar) {
   justify-content: center;
   font-size: 13px;
 }
+.ci-group {
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ci-main-info {
+  font-weight: bold;
+  color: #8b2500; /* Dark red/brown for emphasis */
+  font-size: 1.05em;
+}
 .ci-title { color: #8b2500; font-weight: bold; font-size: 1.2em; text-align: center; margin-bottom: 4px; }
-.ci-row { color: #3c2415; margin: 2px 0; }
+.ci-row { color: #3c2415; margin: 2px 0; text-align: center; }
 .ci-small { font-size: 0.9em; }
-.pillars-row { display: flex; align-items: flex-start; gap: 4px; }
+.pillars-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
 .pillar-label { white-space: nowrap; }
 .pillars-cols {
-  display: flex; flex-direction: row; gap: 4px;
+  display: flex; flex-direction: row; gap: 4px; justify-content: center;
 }
 .pillar-col {
   writing-mode: vertical-rl;

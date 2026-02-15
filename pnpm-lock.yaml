@@ -20,6 +20,9 @@ importers:
       iztro:
         specifier: ^2.5.7
         version: 2.5.7
+      lunar-javascript:
+        specifier: ^1.7.7
+        version: 1.7.7
       vue:
         specifier: ^3.4.21
         version: 3.5.13
@@ -441,6 +444,9 @@ packages:
   iztro@2.5.7:
     resolution: {integrity: sha512-5/sOYoeXNhLKNZ2Fo1sqjoYANZ018B5mE+IPwSwEWlsGivu/HSKC45H63OXAc9pQ6N9B/4JxfbUQGnyDOqt3bA==}
 
+  lunar-javascript@1.7.7:
+    resolution: {integrity: sha512-u/KYiwPIBo/0bT+WWfU7qO1d+aqeB90Tuy4ErXenr2Gam0QcWeezUvtiOIyXR7HbVnW2I1DKfU0NBvzMZhbVQw==}
+
   lunar-lite@0.2.8:
     resolution: {integrity: sha512-Y4tba4RaIFI0ikImJhgoEsyqtDE64lJIM3yFwRX01dbmagCDq7rNmpDQFrSFFy4WXeuywdRVFpIBoT1GGCEizw==}
 
@@ -815,6 +821,8 @@ snapshots:
       i18next: 23.16.8
       lunar-lite: 0.2.8
       lunar-typescript: 1.8.6
+
+  lunar-javascript@1.7.7: {}
 
   lunar-lite@0.2.8:
     dependencies:

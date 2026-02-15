@@ -182,6 +182,7 @@ function handleStarClick(name) {
         <CenterInfo
           :astrolabe="astrolabe"
           :gender="gender"
+          :timeIndex="timeIndex"
           :fourPillars="fourPillars"
           :horoscopeData="horoscopeData"
           :selYear="selYear"
