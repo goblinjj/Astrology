@@ -202,6 +202,31 @@ export function useHoroscope(astrolabe) {
         scopeData.value = { decadal: null, yearly: null, monthly: null }
     }
 
+    function autoSelectLifePalace() {
+        if (!astrolabe.value) return
+        // Find 命宫 at the deepest user-selected scope (monthly > yearly > decadal > natal)
+        // Only check a scope if the user has actually selected it
+        const scopeChecks = [
+            { key: 'monthly', selected: selMonth.value },
+            { key: 'yearly', selected: selYear.value },
+            { key: 'decadal', selected: selDecadal.value },
+        ]
+        for (const { key, selected } of scopeChecks) {
+            if (!selected) continue
+            const names = horoscopeData.value?.[key]?.palaceNames
+            if (names) {
+                const idx = names.indexOf('命宫')
+                if (idx !== -1) {
+                    selectedPalaceIdx.value = idx
+                    return
+                }
+            }
+        }
+        // Fallback: natal 命宫
+        const p = astrolabe.value.palaces.find(p => p.name === '命宫')
+        if (p) selectedPalaceIdx.value = p.index
+    }
+
     function clickPalace(idx) {
         selectedPalaceIdx.value = selectedPalaceIdx.value === idx ? null : idx
     }
@@ -221,6 +246,7 @@ export function useHoroscope(astrolabe) {
             selMonth.value = null
             scopeData.value = { decadal: null, yearly: null, monthly: null }
             composeHoroscopeData()
+            autoSelectLifePalace()
             return
         }
         selDecadal.value = d
@@ -231,6 +257,7 @@ export function useHoroscope(astrolabe) {
         const result = callHoroscope(`${midYear}-7-1`)
         scopeData.value = { decadal: result, yearly: null, monthly: null }
         composeHoroscopeData()
+        autoSelectLifePalace()
     }
 
     function selectYear(y) {
@@ -239,6 +266,7 @@ export function useHoroscope(astrolabe) {
             selMonth.value = null
             scopeData.value = { ...scopeData.value, yearly: null, monthly: null }
             composeHoroscopeData()
+            autoSelectLifePalace()
             return
         }
         selYear.value = y.year
@@ -246,6 +274,7 @@ export function useHoroscope(astrolabe) {
         const result = callHoroscope(`${y.year}-7-1`)
         scopeData.value = { ...scopeData.value, yearly: result, monthly: null }
         composeHoroscopeData()
+        autoSelectLifePalace()
     }
 
     function selectMonth(m) {
@@ -253,6 +282,7 @@ export function useHoroscope(astrolabe) {
             selMonth.value = null
             scopeData.value = { ...scopeData.value, monthly: null }
             composeHoroscopeData()
+            autoSelectLifePalace()
             return
         }
         selMonth.value = m
@@ -260,6 +290,7 @@ export function useHoroscope(astrolabe) {
         const result = callHoroscope(`${yr}-${m}-15`)
         scopeData.value = { ...scopeData.value, monthly: result }
         composeHoroscopeData()
+        autoSelectLifePalace()
     }
 
     return {
@@ -271,7 +302,7 @@ export function useHoroscope(astrolabe) {
         flyingSihuaBg, decadalList, yearList, flowStarsByPalace,
         // Methods
         getStarMutagens, resetSelections, clickPalace,
-        isSanfang, isSelected,
+        isSanfang, isSelected, autoSelectLifePalace,
         selectDecadal, selectYear, selectMonth,
     }
 }

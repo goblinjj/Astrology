@@ -27,7 +27,7 @@ const {
   fourPillars, derivedNames, flyingSihuaBg,
   decadalList, yearList, flowStarsByPalace,
   getStarMutagens, resetSelections, clickPalace,
-  isSanfang, isSelected,
+  isSanfang, isSelected, autoSelectLifePalace,
   selectDecadal, selectYear, selectMonth,
 } = useHoroscope(astrolabe)
 
@@ -42,6 +42,7 @@ function generate() {
     config: { yearDivide: 'exact', horoscopeDivide: 'exact' },
   })
   resetSelections()
+  autoSelectLifePalace()
   // Update URL for sharing
   router.replace({ query: { date: date.value, time: String(timeIndex.value), gender: gender.value } })
 }
