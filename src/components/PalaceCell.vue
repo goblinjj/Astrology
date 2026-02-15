@@ -171,6 +171,7 @@ const allStars = computed(() => [...props.palace.majorStars, ...props.palace.min
   justify-content: center;
   text-align: center;
   box-sizing: border-box;
+  padding-right: 4px;
 }
 .major-name { font-size: 14px; color: #8b2500; }
 .minor-name { font-size: 11px; color: #555; }
