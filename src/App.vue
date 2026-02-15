@@ -7,8 +7,8 @@ inject()
 
 <template>
   <nav class="nav">
-    <RouterLink class="routelink" to="/">星耀</RouterLink>
-    <RouterLink class="routelink" to="/pan">组盘</RouterLink>
+    <RouterLink class="routelink" to="/">排盘</RouterLink>
+    <RouterLink class="routelink" to="/stars">星耀</RouterLink>
     <RouterLink class="routelink" to="/dianji">典籍</RouterLink>
   </nav>
   <div class="divider"></div>
