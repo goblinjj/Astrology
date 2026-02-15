@@ -92,7 +92,7 @@ function getPalaceScopes(p) {
           <input type="radio" v-model="gender" value="女" />♀ 女
         </label>
       </div>
-      <div class="form-row">
+      <div class="form-row" style="justify-content: center; margin-top: 3.2em;">
         <button class="btn-generate" @click="generate">排盘</button>
       </div>
     </div>
