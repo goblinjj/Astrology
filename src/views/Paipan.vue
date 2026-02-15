@@ -3,17 +3,10 @@ import { ref, onMounted, onUnmounted, watch, inject } from 'vue'
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
 import { astro } from 'iztro'
 
-// App Navigation Control
-const toggleNav = inject('toggleNav')
+const setNavVisible = inject('setNavVisible')
 
-// Ensure Nav is visible when leaving
-onUnmounted(() => {
-  if (toggleNav) toggleNav(true)
-})
-
-onBeforeRouteLeave(() => {
-  if (toggleNav) toggleNav(true)
-})
+onBeforeRouteLeave(() => { setNavVisible(true) })
+onUnmounted(() => { setNavVisible(true) })
 
 import { TIME_OPTIONS, SCOPE_COLORS, gridStyle } from '../composables/usePaipanConstants'
 import { useHoroscope } from '../composables/useHoroscope'
@@ -157,8 +150,6 @@ function formatHistoryTime(ts) {
 // ===== Auto-generate from URL query params =====
 // Usage: /?date=2026-02-15&time=0&gender=男
 onMounted(() => {
-  console.log('Paipan: onMounted')
-  if (toggleNav) toggleNav(true)
   loadHistory()
   const q = route.query
   // ...
@@ -168,18 +159,9 @@ watch([date, timeIndex, gender, config], () => {
   if (astrolabe.value) generate()
 }, { deep: true })
 
-// Sync Nav visibility with Settings toggle
-watch(showSettings, (val) => {
-  console.log('Paipan: watch(showSettings)', val)
-  if (toggleNav) toggleNav(val) 
-})
-
-// Hide Nav when chart is generated (initially)
+// Hide App nav when chart is shown
 watch(astrolabe, (val) => {
-  console.log('Paipan: watch(astrolabe)', !!val)
-  if (val && toggleNav) {
-    toggleNav(showSettings.value)
-  }
+  if (val) setNavVisible(false)
 })
 
 function adjustDate(field, delta) {
@@ -293,6 +275,11 @@ function handleStarClick(name) {
        
        <!-- Settings Panel -->
        <div v-show="showSettings" class="form-compact">
+      <nav class="compact-nav">
+        <RouterLink class="compact-navlink" to="/">排盘</RouterLink>
+        <RouterLink class="compact-navlink" to="/stars">星耀</RouterLink>
+        <RouterLink class="compact-navlink" to="/dianji">典籍</RouterLink>
+      </nav>
       <div class="fc-row" style="flex-wrap: wrap; gap: 6px;">
         <input type="date" v-model="date" class="form-input-sm" />
         <select v-model="timeIndex" class="form-input-sm">
@@ -410,6 +397,26 @@ function handleStarClick(name) {
 .form-input { font-family: inherit; font-size: 1em; padding: 0.4em 0.6em; border: 1px solid #d4c5a9; border-radius: 6px; background: #faf6ef; color: #3c2415; flex: 1; max-width: 280px; }
 .radio-label { color: #3c2415; cursor: pointer; }
 .btn-generate { background: #8b2500; color: #fff; border: none; padding: 0.5em 2em; border-radius: 15px; font-size: 1.1em; font-family: inherit; cursor: pointer; }
+
+/* Compact nav inside settings */
+.compact-nav {
+  text-align: center;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #d4c5a9;
+  margin-bottom: 0.2em;
+}
+.compact-navlink {
+  color: #3c2415;
+  font-size: 1em;
+  padding: 0.2em 0.6em;
+  display: inline-block;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+}
+.compact-navlink.router-link-active {
+  color: #8b2500;
+  border-bottom: 2px solid #8b2500;
+}
 
 /* Compact form */
 .form-compact { display: flex; flex-direction: column; gap: 0.4em; padding: 0.4em; background: #fffcf5; border: 1px solid #d4c5a9; border-radius: 6px; margin-bottom: 0.5em; }

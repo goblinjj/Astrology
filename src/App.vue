@@ -1,12 +1,9 @@
+<script setup>
 import { ref, provide } from 'vue'
 
 const isNavVisible = ref(true)
-provide('toggleNav', (val) => { 
-  console.log('App: toggleNav called with', val)
-  isNavVisible.value = val 
-})
-
-inject()
+provide('setNavVisible', (val) => { isNavVisible.value = val })
+</script>
 
 <template>
   <div v-show="isNavVisible">
