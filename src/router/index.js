@@ -14,6 +14,11 @@ const router = createRouter({
       path: '/pan',
       name: '排盘',
       component: () => import('../views/Pan.vue')
+    },
+    {
+      path: '/dianji',
+      name: '典籍',
+      component: () => import('../views/Classics.vue')
     }
   ]
 })

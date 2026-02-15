@@ -1,9 +1,9 @@
 <script setup>
-import { watchEffect, ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const props = defineProps(['modelValue'])
-const title = ref('')
 const curGong = ref('')
+const curTab = ref('info')
 const gong = [
     '命宫',
     '兄弟宫',
@@ -23,6 +23,7 @@ const emits = defineEmits(['update:modelValue'])
 
 const hidden = () => {
     curGong.value = ''
+    curTab.value = 'info'
     emits('update:modelValue', '')
 }
 
@@ -47,15 +48,27 @@ onMounted(() => {
     <div v-if="props.modelValue.title" class="frame2">
         <div @click="hidden" style="text-align: right; padding: 0.5em"><img src="/close.png" style="width: 30px;"></div>
         <div class="title">{{ props.modelValue.category.title }} -> {{ props.modelValue.title }}</div>
-        <div class="text" v-html="formatText(props.modelValue.all)" />
 
-        <div class="all">
-            <div class="text" style="margin-bottom: 2em; color: cornflowerblue;" v-if="props.modelValue[curGong]"
-                v-html=formatText(props.modelValue[curGong]) />
-            <span v-for="g in gong">
-                <span v-if="props.modelValue[g]" class="s" :class="{ select: curGong === g }" @click="curGong = g">{{ g
-                }}</span>
-            </span>
+        <div class="tabs" v-if="props.modelValue.经典">
+            <span class="tab" :class="{ active: curTab === 'info' }" @click="curTab = 'info'">释义</span>
+            <span class="tab" :class="{ active: curTab === 'classic' }" @click="curTab = 'classic'">经典</span>
+        </div>
+
+        <div v-if="curTab === 'info'" class="content-area">
+            <div class="text" v-html="formatText(props.modelValue.all)" />
+            <div class="all">
+                <div class="text gong-text" v-if="props.modelValue[curGong]"
+                    v-html="formatText(props.modelValue[curGong])" />
+                <div class="gong-buttons">
+                    <span v-for="g in gong">
+                        <span v-if="props.modelValue[g]" class="s" :class="{ select: curGong === g }" @click="curGong = g">{{ g }}</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="curTab === 'classic'" class="content-area">
+            <div class="classic-text">{{ props.modelValue.经典 }}</div>
         </div>
     </div>
 </template>
@@ -63,11 +76,14 @@ onMounted(() => {
 <style scoped>
 .frame2 {
     width: 100%;
-    height: calc(100vh);
+    height: 100vh;
     background: white;
     position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 @media (min-width: 1024px) {
@@ -80,6 +96,34 @@ onMounted(() => {
 .title {
     font-size: x-large;
     padding: 0.3em;
+}
+
+.tabs {
+    display: flex;
+    padding: 0 0.5em;
+    gap: 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab {
+    padding: 0.5em 1.2em;
+    cursor: pointer;
+    font-size: large;
+    color: #666;
+    border-bottom: 2px solid transparent;
+    user-select: none;
+}
+
+.tab.active {
+    color: cornflowerblue;
+    border-bottom-color: cornflowerblue;
+}
+
+.content-area {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .s {
@@ -97,14 +141,29 @@ onMounted(() => {
 .text {
     padding: 0.5em;
     font-size: large;
-    margin-top: 1.5em;
-    max-height: 35%;
-    overflow: auto;
+    margin-top: 1em;
+}
+
+.gong-text {
+    color: cornflowerblue;
+    margin-bottom: 1em;
 }
 
 .all {
-    position: absolute;
-    bottom: 5em;
+    margin-top: auto;
+    padding-bottom: 3em;
     width: 100%;
+}
+
+.gong-buttons {
+    padding-top: 0.5em;
+}
+
+.classic-text {
+    padding: 1em;
+    font-size: medium;
+    line-height: 2;
+    color: #5c4033;
+    white-space: pre-wrap;
 }
 </style>

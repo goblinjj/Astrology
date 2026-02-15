@@ -8,6 +8,7 @@ inject()
 <template>
   <RouterLink class="routelink" to="/">星耀</RouterLink>
   <RouterLink class="routelink" to="/pan">组盘</RouterLink>
+  <RouterLink class="routelink" to="/dianji">典籍</RouterLink>
   <hr style="margin-bottom: 1em;">
   <RouterView />
   <SpeedInsights/>
