@@ -27,7 +27,7 @@ const date = ref('')
 const timeIndex = ref(0)
 const gender = ref('男')
 const config = ref({
-  yearDivide: 'normal',
+  yearDivide: 'exact',
   fixLeap: true,
 })
 const astrolabe = ref(null)
