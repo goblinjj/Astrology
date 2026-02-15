@@ -61,9 +61,99 @@ function generate() {
   router.replace({ query: { date: date.value, time: String(timeIndex.value), gender: gender.value } })
 }
 
+const history = ref([])
+const showHistory = ref(false)
+
+function loadHistory() {
+  try {
+    const saved = localStorage.getItem('paipan_history')
+    if (saved) {
+      history.value = JSON.parse(saved)
+    }
+  } catch (e) {
+    console.error('Failed to load history', e)
+  }
+}
+
+function saveHistory() {
+  const newItem = {
+    date: date.value,
+    timeIndex: timeIndex.value,
+    gender: gender.value,
+    config: { ...config.value },
+    timestamp: Date.now(),
+  }
+  
+  // Deduplicate: Check if latest is same
+  if (history.value.length > 0) {
+    const latest = history.value[0]
+    if (latest.date === newItem.date && 
+        latest.timeIndex === newItem.timeIndex && 
+        latest.gender === newItem.gender &&
+        JSON.stringify(latest.config) === JSON.stringify(newItem.config)) {
+      return
+    }
+  }
+
+  history.value.unshift(newItem)
+  if (history.value.length > 10) {
+    history.value.pop()
+  }
+  
+  try {
+    localStorage.setItem('paipan_history', JSON.stringify(history.value))
+  } catch (e) {
+    console.error('Failed to save history', e)
+  }
+}
+
+function deleteHistoryItem(index) {
+  history.value.splice(index, 1)
+  saveHistoryToStorage()
+}
+
+const clearConfirming = ref(false)
+
+function clearHistory() {
+  if (clearConfirming.value) {
+    history.value = []
+    localStorage.removeItem('paipan_history')
+    clearConfirming.value = false
+  } else {
+    clearConfirming.value = true
+    setTimeout(() => {
+      clearConfirming.value = false
+    }, 3000)
+  }
+}
+
+function saveHistoryToStorage() {
+  try {
+    localStorage.setItem('paipan_history', JSON.stringify(history.value))
+  } catch (e) {
+    console.error('Failed to save history', e)
+  }
+}
+
+function restoreHistory(item) {
+  date.value = item.date
+  timeIndex.value = item.timeIndex
+  gender.value = item.gender
+  if (item.config) {
+    config.value = { ...item.config }
+  }
+  showHistory.value = false
+  // generate() will be triggered by watcher
+}
+
+function formatHistoryTime(ts) {
+  return new Date(ts).toLocaleString()
+}
+
 // ===== Auto-generate from URL query params =====
 // Usage: /?date=2026-02-15&time=0&gender=男
 onMounted(() => {
+  loadHistory()
   const q = route.query
   if (q.date) {
     date.value = q.date
@@ -189,12 +279,18 @@ function handleStarClick(name) {
 
     <!-- Compact Form -->
     <div v-if="astrolabe" class="compact-bar">
-       <button class="btn-toggle-settings" @click="showSettings = !showSettings">
-         {{ showSettings ? '收起设置 ▲' : '展开设置 ▼' }}
-       </button>
+       <div style="display: flex; gap: 8px;">
+         <button class="btn-toggle-settings" style="flex: 1" @click="showSettings = !showSettings">
+           {{ showSettings ? '收起设置 ▲' : '展开设置 ▼' }}
+         </button>
+         <button class="btn-toggle-settings" style="flex: 1" @click="showHistory = !showHistory">
+           历史记录 (临时) {{ showHistory ? '▲' : '▼' }}
+         </button>
+       </div>
+       
        <!-- Settings Panel -->
        <div v-show="showSettings" class="form-compact">
-      <div class="fc-row">
+      <div class="fc-row" style="flex-wrap: wrap; gap: 6px;">
         <input type="date" v-model="date" class="form-input-sm" />
         <select v-model="timeIndex" class="form-input-sm">
           <option v-for="t in TIME_OPTIONS" :key="t.value" :value="t.value">{{ t.label }}</option>
@@ -228,8 +324,27 @@ function handleStarClick(name) {
           <input type="radio" v-model="config.fixLeap" :value="true" />中分
         </label>
       </div>
+      </div>
+      
+      <!-- History Panel -->
+      <div v-show="showHistory" class="history-panel">
+        <div class="h-actions">
+           <button class="btn-save-history" @click="saveHistory">💾 保存当前</button>
+           <button class="btn-clear-history" :class="{ 'btn-confirm-danger': clearConfirming }" @click.stop="clearHistory">
+             {{ clearConfirming ? '确定清空?' : '🗑️ 清空' }}
+           </button>
+        </div>
+        <div v-if="history.length === 0" class="history-empty">暂无历史记录</div>
+        <div v-for="(item, idx) in history" :key="idx" class="history-item" @click="restoreHistory(item)">
+          <div class="h-main">
+            <span class="h-date">{{ item.date }}</span>
+            <span class="h-time">{{ TIME_OPTIONS.find(t => t.value === item.timeIndex)?.label }}</span>
+            <span class="h-gender">{{ item.gender }}</span>
+          </div>
+          <button class="btn-delete-item" @click.stop="deleteHistoryItem(idx)" title="删除">×</button>
+        </div>
+      </div>
     </div>
-  </div>
 
     <!-- Chart -->
     <div v-if="astrolabe" class="chart-section">
@@ -321,6 +436,63 @@ function handleStarClick(name) {
   transition: all 0.2s;
 }
 .btn-toggle-settings:hover { background: #fdfbf7; border-color: #8b2500; }
+
+.history-panel {
+  background: var(--color-background-soft);
+  border: 1px solid #d4c5a9;
+  border-top: none;
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.history-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid #d4c5a9;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+}
+.history-item:hover { background: var(--color-background-mute); }
+.history-item:last-child { border-bottom: none; }
+.h-main { display: flex; gap: 8px; font-weight: bold; color: #3c2415; align-items: center; font-size: 0.95em; }
+.history-empty { padding: 12px; text-align: center; color: #999; font-size: 0.9em; }
+
+.h-actions { 
+  padding: 8px; 
+  border-bottom: 1px solid #d4c5a9; 
+  background: var(--color-background-mute);
+  display: flex;
+  gap: 8px;
+}
+.btn-save-history, .btn-clear-history {
+  flex: 1;
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #fff;
+}
+.btn-save-history { background: #8b2500; }
+.btn-save-history:hover { background: #a03000; }
+.btn-clear-history { background: #888; }
+.btn-clear-history:hover { background: #666; }
+.btn-confirm-danger { background: #c41e3a !important; color: white; }
+
+.btn-delete-item {
+  background: transparent;
+  border: none;
+  font-size: 1.2em;
+  color: #c0c0c0;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  margin-left: auto;
+}
+.btn-delete-item:hover { color: #c41e3a; }
 
 
 /* === Chart Grid === */
